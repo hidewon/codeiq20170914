@@ -20,11 +20,35 @@ def add_fee(combo):
 		else:
 			return 0	
 
+def shrink_orders(orders):
+	fees={}
+	for order in orders:
+		pay_day=order.split(",")	
+		pay=pay_day[0]
+		day=pay_day[1]
+
+		day_tmp=fees.get(pay)
+		if day_tmp == None:
+			fees[pay]=day
+		if day_tmp > day:
+			fees[pay]=day
+
+	fees_s=[]
+	for fee in fees:
+		fees_s.append(fee+","+fees.get(fee))
+
+	return fees_s
+
 fee={}
 orders=[]
 for line in sys.stdin:
 	line=line.rstrip('\r\n')
 	orders.append(line)
+
+orders=shrink_orders(orders)
+
+#sys.exit(1)
+
 
 #combo_s=8
 combo_s=len(orders)+1
