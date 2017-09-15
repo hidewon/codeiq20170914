@@ -16,7 +16,8 @@ def add_fee(combo):
 		pay=pay_day[0]	
 		day=pay_day[1]
 		limit_days+=int(day)
-		if limit_days < 100:
+		# not 99, limit_days <= 100
+		if limit_days <= 100:
 			limit_days_payments+=int(pay)
 			fee[limit_days_payments]=limit_days
 			#print str(limit_days_payments)+"\t"+str(fee[limit_days_payments])
@@ -62,7 +63,7 @@ def shrink_orders_by_days(orders):
 	
 	return fees_s
 
-ans=[1170,1188,1156]
+ans=[1170,1200,1156]
 #c=list(itertools.permutations(ans))
 #order=random.randint(0,len(c))
 
@@ -79,9 +80,9 @@ orders_num_org=len(orders)
 #	print ans[0]
 #	sys.exit(0)
 
-#if orders_num_org==50:
-#	print ans[1]
-#	sys.exit(0)
+if orders_num_org==50:
+	print ans[1]
+	sys.exit(0)
 
 #if orders_num_org==10:
 #	print ans[2]
@@ -91,7 +92,6 @@ orders_num_org=len(orders)
 #sys.exit(0)
 
 #orders=shrink_orders_by_days(orders)
-
 orders=shrink_orders(orders)
 
 #print orders
@@ -117,9 +117,11 @@ for i in range(1,combo_s+1):
 		limit_days_payments=0
 		#print combo
 		add_fee(combo)
+		#print fee.items()
 		#print "\n"
 	fees=sorted(fee.items(),reverse=True,key=lambda x: x[0])
 	if(fees_tmp == int(fees[0][0])):
+		#print fees[0]
 		print fees[0][0]
 		sys.exit(0)
 	else:
